@@ -1,0 +1,55 @@
+{
+  "variables": {
+    "aws_access_key": "{{env `TU_AMI_ACCESS_KEY`}}",
+    "aws_secret_key": "{{env `TU_AMI_SECRET_KEY`}}",
+    "aws_token": "{{env `TU_AMI_TOKEN`}}"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+
+    "region": "eu-west-3",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "token": "{{user `aws_token`}}",
+
+    "ami_name": "rjelinski-tu-ami-ec2-{{timestamp}}",
+    "instance_type": "t2.micro",
+    "source_ami": "ami-0e11cbb34015ff725",
+
+    "communicator": "ssh",
+    "ssh_username": "ubuntu",
+    "vpc_id": "vpc-0869a63d4d540f150",
+    "subnet_id": "subnet-0db6d7322e13b2ce4",
+    "associate_public_ip_address": true,
+
+    "tags": {
+      "Owner": "rjelinski"
+    },
+
+    "run_tags": {
+      "Owner": "rjelinski",
+      "Name": "rjelinski_ami_instance"
+    }
+  }],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "build.zip",
+      "destination": "/home/ubuntu/build.zip"
+    },
+    {
+      "type": "file",
+      "source": "infrastructure/ami/provision.sh",
+      "destination": "/home/ubuntu/provision.sh"
+    },
+    {
+      "type": "file",
+      "source": "infrastructure/ami/web.service.tpl",
+      "destination": "/home/ubuntu/web.service.tpl"
+    },
+    {
+      "type": "shell",
+      "inline": ["chmod +x provision.sh; bash provision.sh"]
+    }
+  ]
+}
