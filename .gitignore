@@ -6,3 +6,4 @@ app/db.db
 keys/
 build/
 build.zip
+infrastructure/envs/**/*/private

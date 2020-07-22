@@ -1,0 +1,10 @@
+name_prefix = "rjelinski-tu-test"
+region      = "eu-west-3"
+ami_id      = "ami-0c55170fdf0a2f4af"
+owner       = "rjelinski"
+
+remote_bucket   = "rjelinski-terraform-state"
+remote_key      = "state/main.test.tfstate"
+remote_region   = "eu-west-3"
+remote_profile  = "sandbox"
+remote_role_arn = "arn:aws:iam::890769921003:role/rjelinski-terraform-role"

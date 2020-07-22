@@ -18,11 +18,13 @@ variable "ami_id" {
   type        = string
 }
 
-variable "db" {
-  description = "database user info and db name"
+variable "remote" {
+  description = "configuration for remote state of main infrastructure"
   type = object({
-    name     = string
-    username = string
-    password = string
+    bucket   = string
+    key      = string
+    region   = string
+    profile  = string
+    role_arn = string
   })
 }

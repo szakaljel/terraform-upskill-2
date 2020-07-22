@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket   = "rjelinski-terraform-state"
-    key      = "state/ami.tfstate"
+    key      = "state/app.test.tfstate"
     region   = "eu-west-3"
     acl      = "private"
     encrypt  = true
@@ -12,7 +12,7 @@ terraform {
 }
 
 provider "aws" {
-  region  = "eu-west-3"
+  region  = var.region
   profile = "sandbox"
   assume_role {
     role_arn     = "arn:aws:iam::890769921003:role/rjelinski-terraform-provider-role"

@@ -15,3 +15,17 @@ resource "aws_route_table_association" "ec2_rt_association" {
   subnet_id      = aws_subnet.public[each.key].id
   route_table_id = aws_route_table.public[0].id
 }
+
+resource "aws_route_table" "private" {
+  count = local.is_any_private ? 1 : 0
+
+  vpc_id = aws_vpc.main.id
+  tags   = merge({ Name = "${var.name_prefix}-rt-private" }, var.tags)
+}
+
+resource "aws_route_table_association" "ec2_rt_private_association" {
+  for_each = var.private_subnets
+
+  subnet_id      = aws_subnet.private[each.key].id
+  route_table_id = aws_route_table.private[0].id
+}
