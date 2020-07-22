@@ -1,11 +1,3 @@
-data "aws_availability_zones" "region_zones" {
-  state = "available"
-  filter {
-    name   = "group-name"
-    values = [var.region]
-  }
-}
-
 module "main" {
   source = "../../common/main"
 
