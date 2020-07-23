@@ -22,19 +22,21 @@ Roles:
 used user should be able to assume aforementioned roles: 
     - user in 'trusted entities' of roles
     - permission to 'sts:AssumeRole'
+
+aws config
+    - in ~/.aws/config file
+    - sandbox with credentials fromsanbox 
+    - sandbox_packer entry with specified role refering to sanbox
 ```
 
 ### terraform
 ```
-make ENV=dev tf_apply
-make ENV=dev tf_destroy
+make ENV=dev LAYER=main tf_apply
+make ENV=dev LAYER=main tf_destroy
 ```
 Available envs: dev, test
-
+Available layers: main, app
 ### ami
-```
-make tf_ami_apply
-```
 update TU_AMI* variables in Makefile
 ```
 make packer_create_ami

@@ -1,16 +1,13 @@
 {
   "variables": {
-    "aws_access_key": "{{env `TU_AMI_ACCESS_KEY`}}",
-    "aws_secret_key": "{{env `TU_AMI_SECRET_KEY`}}",
-    "aws_token": "{{env `TU_AMI_TOKEN`}}"
+    "vpc_id": "{{env `TU_AMI_VPC_ID`}}",
+    "subnet_id": "{{env `TU_AMI_SUBNET_ID`}}"
   },
   "builders": [{
     "type": "amazon-ebs",
 
     "region": "eu-west-3",
-    "access_key": "{{user `aws_access_key`}}",
-    "secret_key": "{{user `aws_secret_key`}}",
-    "token": "{{user `aws_token`}}",
+    "profile": "sandbox_packer",
 
     "ami_name": "rjelinski-tu-ami-ec2-{{timestamp}}",
     "instance_type": "t2.micro",
@@ -18,8 +15,8 @@
 
     "communicator": "ssh",
     "ssh_username": "ubuntu",
-    "vpc_id": "vpc-0869a63d4d540f150",
-    "subnet_id": "subnet-0db6d7322e13b2ce4",
+    "vpc_id": "{{user `vpc_id`}}",
+    "subnet_id": "{{user `subnet_id`}}",
     "associate_public_ip_address": true,
 
     "tags": {
