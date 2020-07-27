@@ -1,0 +1,9 @@
+.idea/
+venv/
+app/db.db
+*.pyc
+**/.terraform/
+keys/
+build/
+build.zip
+infrastructure/envs/**/*/private

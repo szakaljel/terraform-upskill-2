@@ -1,0 +1,52 @@
+{
+  "variables": {
+    "vpc_id": "{{env `TU_AMI_VPC_ID`}}",
+    "subnet_id": "{{env `TU_AMI_SUBNET_ID`}}"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+
+    "region": "eu-west-3",
+    "profile": "sandbox_packer",
+
+    "ami_name": "rjelinski-tu-ami-ec2-{{timestamp}}",
+    "instance_type": "t2.micro",
+    "source_ami": "ami-0e11cbb34015ff725",
+
+    "communicator": "ssh",
+    "ssh_username": "ubuntu",
+    "vpc_id": "{{user `vpc_id`}}",
+    "subnet_id": "{{user `subnet_id`}}",
+    "associate_public_ip_address": true,
+
+    "tags": {
+      "Owner": "rjelinski"
+    },
+
+    "run_tags": {
+      "Owner": "rjelinski",
+      "Name": "rjelinski_ami_instance"
+    }
+  }],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "build.zip",
+      "destination": "/home/ubuntu/build.zip"
+    },
+    {
+      "type": "file",
+      "source": "infrastructure/ami/provision.sh",
+      "destination": "/home/ubuntu/provision.sh"
+    },
+    {
+      "type": "file",
+      "source": "infrastructure/ami/web.service.tpl",
+      "destination": "/home/ubuntu/web.service.tpl"
+    },
+    {
+      "type": "shell",
+      "inline": ["chmod +x provision.sh; bash provision.sh"]
+    }
+  ]
+}
